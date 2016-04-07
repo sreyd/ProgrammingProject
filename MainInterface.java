@@ -3,14 +3,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
-import net.miginfocom.swing.MigLayout;
 import javax.swing.*;
 
 @SuppressWarnings("serial")
 public class MainInterface extends JPanel 
 					implements ActionListener {
 
-     JFrame frame = new JFrame("Secure Cloud Storage App");
+	 JPanel buttonPanel;
+	 JFrame frame = new JFrame("Secure Cloud Storage App");
      JMenuBar greenMenuBar = new JMenuBar();
      JMenu menu1 = new JMenu("Upload & Encrypt");
      JMenu menu2 = new JMenu("Download & Decrypt");
@@ -36,8 +36,6 @@ public class MainInterface extends JPanel
 	 JRadioButton yesDropbox = new JRadioButton("Yes");
 	 JRadioButton noDropbox = new JRadioButton("No");
      JLabel spacer;
-	private static JPanel buttonPanel2;
-	private static JPanel buttonPanel;
      
 	 public MainInterface() {
 
@@ -80,91 +78,37 @@ public class MainInterface extends JPanel
 	     //value chooser
 	     chunkSize.setBounds(0, 0, 10, 10);
 	 }
-	
-	public static void main (String[]args) {
-		MainInterface main = new MainInterface();
+    
+	 @Override
+		public void actionPerformed(ActionEvent e) {
+			//Handle open button action.
+	        if (e.getSource() == openButton) {
+	            int returnVal = fc.showOpenDialog(MainInterface.this);
+
+	            if (returnVal == JFileChooser.APPROVE_OPTION) {
+	                File file = fc.getSelectedFile();
+	                //This is where a real application would open the file.
+	                System.out.println("Opening: "+fc.getCurrentDirectory() + file.getName() + "." );
+	                textArea.setText(fc.getCurrentDirectory() + file.getName());
+	            } else {
+	            	System.out.println("Open command cancelled by user.");
+	            }
+	        //    log.setCaretPosition(log.getDocument().getLength());
+	// TODO Auto-generated method stub
+			
+		}
 	    
-	    //create menus
-        main.greenMenuBar.add(main.menu1);
-        main.greenMenuBar.add(main.menu2);
+	    if (e.getSource() == menu1) {
 
-        buttonPanel = new JPanel();
-        buttonPanel.add(main.textArea);
-        buttonPanel.add(main.openButton);
-
-        buttonPanel2 = new JPanel();
-        buttonPanel2.setLayout(new MigLayout());
-        buttonPanel2.setBackground(new Color(248, 213, 131));
-        buttonPanel2.add(main.spacer =  new JLabel(" "), "span, grow");
-        buttonPanel2.add(main.numberOfChunks);
-        buttonPanel2.add(main.chunkSize);
-        buttonPanel2.add(main.spacer=  new JLabel(" "), "span, grow");
-        buttonPanel2.add(main.googleDrive);
-        buttonPanel2.add(main.spacer=  new JLabel(" "), "span, grow");
-        buttonPanel2.add(main.yesGoogle);
-        buttonPanel2.add(main.noGoogle);
-        buttonPanel2.add(main.spacer=  new JLabel(" "), "span, grow");
-        buttonPanel2.add(main.userName);
-        buttonPanel2.add(main.userNameTextArea);
-        buttonPanel2.add(main.spacer=  new JLabel(" "), "span, grow");
-        buttonPanel2.add(main.passWord);
-        buttonPanel2.add(main.passWordTextArea);
-        buttonPanel2.add(main.spacer=  new JLabel(" "), "span, grow");
-        buttonPanel2.add(main.spacer=  new JLabel(" "), "span, grow");
-        buttonPanel2.add(main.dropBox);
-        buttonPanel2.add(main.spacer=  new JLabel(" "), "span, grow");
-        buttonPanel2.add(main.yesDropbox);
-        buttonPanel2.add(main.noDropbox);
-        buttonPanel2.add(main.spacer=  new JLabel(" "), "span, grow");
-        buttonPanel2.add(main.userName2);
-        buttonPanel2.add(main.userNameTextArea2);
-        buttonPanel2.add(main.spacer=  new JLabel(" "), "span, grow");
-        buttonPanel2.add(main.passWord2);
-        buttonPanel2.add(main.passWordTextArea2);
-        buttonPanel2.add(main.spacer=  new JLabel(" "), "span, grow");
-        buttonPanel2.add(main.spacer=  new JLabel(" "), "span, grow");
-        buttonPanel2.add(main.uploadButton, BorderLayout.CENTER);
-        
-        //Set the menu bar and add the label to the content pane.
-        main.frame.setJMenuBar(main.greenMenuBar);
-
-    	main.frame.add(buttonPanel, BorderLayout.PAGE_START);
-        main.frame.getContentPane().add(buttonPanel2);
-      
-        //Display the window.
-	    main.frame.pack();
-	    main.frame.setVisible(true);
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		//Handle open button action.
-        if (e.getSource() == openButton) {
-            int returnVal = fc.showOpenDialog(MainInterface.this);
-
-            if (returnVal == JFileChooser.APPROVE_OPTION) {
-                File file = fc.getSelectedFile();
-                //This is where a real application would open the file.
-                System.out.println("Opening: "+fc.getCurrentDirectory() + file.getName() + "." );
-                textArea.setText(fc.getCurrentDirectory() + file.getName());
-            } else {
-            	System.out.println("Open command cancelled by user.");
-            }
-        //    log.setCaretPosition(log.getDocument().getLength());
-// TODO Auto-generated method stub
-		
-	}
-    
-    if (e.getSource() == menu1) {
-
-         //Display the window.
-	    frame.pack();
-	    frame.setVisible(true);
-    }
-    
-    if (e.getSource() == menu2) {
-    	buttonPanel.setVisible(false);
-    }
-    
-	}
+	         //Display the window.
+		    frame.pack();
+		    frame.setVisible(true);
+	    }
+	    
+	    if (e.getSource() == menu2) {
+	    	buttonPanel.setVisible(false);
+	    }
+	    
+		}
+	
 }
